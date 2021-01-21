@@ -1,4 +1,5 @@
-function wxPromise(key){
+import { make } from '../make'
+function wxPromise(key) {
   return function (param) {
     return new Promise((resolve, reject) => {
       const data = Object.assign({
