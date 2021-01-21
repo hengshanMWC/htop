@@ -1,3 +1,18 @@
+export function make (obj, fn) {
+  if (typeof Proxy === 'function') {
+    return createProxyAll(obj, fn)
+  } else {
+    return createdefinePropertyAll(obj, fn)
+  }
+}
+export function createProxyAll (obj, fn) {
+  return new Proxy(obj, {
+    get(target, key, receiver) {
+      if (!target[key]) target[key] = fn(key)
+      return Reflect.get(target, key, receiver);
+    }
+  })
+}
 export function createdefinePropertyAll (obj, fn) {
   const _obj = {}
   const result = {}
@@ -11,19 +26,4 @@ export function createdefinePropertyAll (obj, fn) {
   })
   return result
 }
-export function createProxyAll (obj, fn) {
-  return new Proxy(obj, {
-    get(target, key, receiver) {
-      if (!target[key]) target[key] = fn(key)
-      // receiver会循环
-      return Reflect.get(target, key, receiver);
-    }
-  })
-}
-export function make (obj, fn) {
-  if (typeof Proxy === 'function') {
-    return createProxyAll(obj, fn)
-  } else {
-    return createdefinePropertyAll(obj, fn)
-  }
-}
+
