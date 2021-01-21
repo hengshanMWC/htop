@@ -1,0 +1,1 @@
+export { default as wxPromiseAll } from './adapter/wx'

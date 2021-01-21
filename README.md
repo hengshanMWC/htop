@@ -1,0 +1,1 @@
+不同端的可以放在adapter目录，然后导出到index.js上
